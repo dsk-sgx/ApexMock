@@ -45,12 +45,7 @@ public class ApexMock {
         */
         public Object handleMethodCall(Object stubbedObject, String stubbedMethodName, 
                 Type returnType, List<Type> paramTypes, List<String> paramNames, List<Object> args) {
-            
-            Object result = mockClasses.get(stubbedObject).getMockedValue(stubbedMethodName, paramTypes, args);
-            if (result instanceof Exception && !returnType.equals(Exception.class)) {
-                throw (Exception)result;
-            }
-            return result;
+            return mockClasses.get(stubbedObject).getMockedValue(stubbedMethodName, paramTypes, args);
         }
     }
 }

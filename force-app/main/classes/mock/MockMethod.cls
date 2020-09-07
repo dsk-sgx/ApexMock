@@ -25,7 +25,10 @@ public class MockMethod {
     }
 
     public Object getReturnValue() {
-      return this.e == null ? this.returnValue : this.e;
+      if (e != null) {
+        throw e;
+      }
+      return this.returnValue;
     }
 
     public void doNothing() {
