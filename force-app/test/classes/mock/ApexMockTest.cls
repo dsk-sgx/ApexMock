@@ -31,11 +31,24 @@ private class ApexMockTest {
         System.assertEquals('Mocked Value2', mocked2.getString());
     }
 
-    @isTest
+    @isTest   
     static void doNothingTest() {
         SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
         ApexMock.whenCalled(mocked, 'voidMethod').doNothing();
 
         mocked.voidMethod();
+    }
+
+    @isTest
+    static void throwExceptionTest() {
+        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
+        ApexMock.whenCalled(mocked, 'getString').thenThrow(new SomeException('Mocked exception'));
+
+        try {
+            mocked.getString();
+            System.assert(false, 'No exception was thrown.');
+        } catch (SomeException e) {
+            System.assertEquals('Mocked exception', e.getMessage());
+        }
     }
 }

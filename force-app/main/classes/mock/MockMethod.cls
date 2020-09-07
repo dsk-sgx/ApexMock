@@ -6,6 +6,8 @@ public class MockMethod {
 
     private Object returnValue;
 
+    private Exception e;
+
     public MockMethod(String methodName) {
       this.methodName = methodName;
     }
@@ -18,8 +20,12 @@ public class MockMethod {
       this.returnValue = returnValue;
     }
 
+    public void thenThrow(Exception e) {
+      this.e = e;  
+    }
+
     public Object getReturnValue() {
-      return this.returnValue;
+      return this.e == null ? this.returnValue : this.e;
     }
 
     public void doNothing() {
