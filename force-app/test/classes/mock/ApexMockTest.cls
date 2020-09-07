@@ -30,4 +30,12 @@ private class ApexMockTest {
         System.assertEquals('Mocked Value1', mocked1.getString());
         System.assertEquals('Mocked Value2', mocked2.getString());
     }
+
+    @isTest
+    static void doNothingTest() {
+        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
+        ApexMock.whenCalled(mocked, 'voidMethod').doNothing();
+
+        mocked.voidMethod();
+    }
 }

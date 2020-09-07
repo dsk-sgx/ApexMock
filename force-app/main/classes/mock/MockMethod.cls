@@ -21,4 +21,7 @@ public class MockMethod {
     public Object getReturnValue() {
       return this.returnValue;
     }
+
+    public void doNothing() {
+    }
 }

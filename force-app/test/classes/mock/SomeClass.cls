@@ -1,5 +1,9 @@
 public class SomeClass {
     
+    public void voidMethod() {
+        throw new SomeException('Called original method.');
+    }
+
     public String getString() {
         return 'Not Mocked Value';
     }
