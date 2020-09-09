@@ -4,33 +4,45 @@
  */
 public class ApexMock {
 
-    private static Map<Object, MockClass> mockClasses = new Map<Object, MockClass>();
+    private static Map<Object, MockMethods> mockMethods = new Map<Object, MockMethods>();
     
     private ApexMock() {
     }
 
     /**
-     * 
-     * @param 
+     * Create the instance of mocked class.
+     * @param typeToMock
      * @return Mocked object
      */
     @TestVisible
     private static Object create(Type typeToMock) {
         Object stubClass = Test.createStub(typeToMock, stubProviderImpl);
-        mockClasses.put(stubClass, new MockClass(typeToMock));
+        mockMethods.put(stubClass, new MockMethods(typeToMock));
         return stubClass;
     }
 
     /**
-     * Used to set the behavior when the Mock method is called.
-     * @param stubbedClass an Object created by `ApexMock.create`
-     * @param methodName 
+     * Use to set the behavior when the Mock method is called.
+     * @param stubbedClass An Object created by `ApexMock.create`
+     * @param stubbedMethod
+     * @return Specification of mock method
      */
     @TestVisible
-    private static MockMethodSpec whenCalled(Object stubbedClass, String methodName) {
-        MockClass mockClass = mockClasses.get(stubbedClass);
-        return mockClasses.get(stubbedClass).whenCalled(methodName);
+    private static MockMethodSpec whenCalled(Object stubbedClass, String stubbedMethod) {
+        return mockMethods.get(stubbedClass).getMethod(stubbedMethod).whenCalled();
     }
+
+    /**
+     * Use to verify when the Mock method after called.
+     * @param stubbedClass An Object created by `ApexMock.create`
+     * @param stubbedMethod
+     * @return Verifier of mock method
+     */
+    @TestVisible
+    private static MockMethodVerifier verify(Object stubbedClass, String stubbedMethod) {
+        // TODO
+        return null;
+    } 
 
     private static StubProviderImpl stubProviderImpl = new StubProviderImpl();
     private class StubProviderImpl implements StubProvider {
@@ -46,7 +58,9 @@ public class ApexMock {
         */
         public Object handleMethodCall(Object stubbedObject, String stubbedMethodName, 
                 Type returnType, List<Type> paramTypes, List<String> paramNames, List<Object> args) {
-            return mockClasses.get(stubbedObject).getMockedValue(stubbedMethodName, paramTypes, args);
+            return mockMethods.get(stubbedObject)
+                    .getMethod(stubbedMethodName)
+                    .getMockedValue(paramTypes, args);
         }
     }
 }

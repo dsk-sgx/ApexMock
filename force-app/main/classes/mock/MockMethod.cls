@@ -1,15 +1,17 @@
+/**
+ * 
+ */
 public class MockMethod {
 
     private String methodName;
 
     List<MockMethodSpec> specs = new List<MockMethodSpec>();
 
-    private Integer calledCount = 0; //TODO change to CallState class
-
-    List<Object> callState = new List<Object>();
-
+    ExecutionState executionState;
+    
     public MockMethod(String methodName) {
       this.methodName = methodName;
+      this.executionState = new ExecutionState();
     }
 
     public MockMethodSpec whenCalled() {
@@ -18,17 +20,18 @@ public class MockMethod {
       return spec;
     }
 
-    public Object getReturnValue(List<Type> argTypes, List<Object> args) {
-      calledCount++; //  change to CallState class
-      
-      MockMethodSpec.Key specKey = new MockMethodSpec.Key(calledCount);
-
+    public Object getMockedValue(List<Type> argTypes, List<Object> args) {
+      MockMethodSpec.Key specKey = new MockMethodSpec.Key(executionState.getExecutionCount());
       for (MockMethodSpec spec : specs) {
         if (spec.key.equals(specKey)) {
+          executionState.execute(args);
           return spec.getReturnValue();
         }
       }
-      
       throw new MockException('MockMethodSpec not found');
+    }
+
+    public ExecutionState getexecutionState() {
+      return executionState;
     }
 }
