@@ -33,6 +33,8 @@ public with sharing class MockMethodSpec {
 
     private Object returnValue;
 
+    private Boolean isSetReturnValue = false;
+
     private Exception throwException;
 
     public MockMethodSpec times(Integer times) {
@@ -46,6 +48,7 @@ public with sharing class MockMethodSpec {
      */
     public void thenReturn(Object returnValue) {
       this.returnValue = returnValue;
+      this.isSetReturnValue = true;
     }
 
     /**
@@ -56,13 +59,25 @@ public with sharing class MockMethodSpec {
       this.throwException = e;
     }
 
+    /**
+     * Returns the set return value.
+     * @throw Exception When an exception is set to throw.
+     * @throw MockExcpetion When return value is not set.
+     */
     public Object getReturnValue() {
       if (throwException != null) {
         throw throwException;
       }
+      if (!isSetReturnValue) {
+        throw new MockException('Return value is not set.');
+      }
       return returnValue;
     }
 
+    /**
+     * Define no return value.
+     */
     public void doNothing() {
+      isSetReturnValue = true;
     }
 }
