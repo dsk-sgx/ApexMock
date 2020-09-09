@@ -16,7 +16,7 @@ private class ApexMockTest {
         ApexMock.whenCalled(mocked, 'getString').thenReturn('Mocked Value');
 
         System.assertEquals('Mocked Value', mocked.getString('1', 2));
-        // ApexMock.verify(mocked).called('getString').times(1).with(new List<Object>{'1', 2});
+        // ApexMock.verify(mocked, 'getString').times(1).with('1', 2);
     }
 
     @isTest
@@ -49,6 +49,19 @@ private class ApexMockTest {
             System.assert(false, 'No exception was thrown.');
         } catch (SomeException e) {
             System.assertEquals('Mocked exception', e.getMessage());
+        }
+    }
+
+    @isTest
+    static void throwExceptionWhenNotSetReturnValue() {
+        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
+        ApexMock.whenCalled(mocked, 'getString');
+
+        try {
+            mocked.getString();
+            System.assert(false, 'No exception was thrown.');
+        } catch (MockException e) {
+            System.assertEquals('Return value is not set.', e.getMessage());
         }
     }
 }

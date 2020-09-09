@@ -1,36 +1,29 @@
+/**
+ * 
+ */
 public class MockMethod {
 
     private String methodName;
 
-    private List<Object> args;
-
-    private Object returnValue;
-
-    private Exception e;
+    List<MockMethodSpec> specs = new List<MockMethodSpec>();
 
     public MockMethod(String methodName) {
       this.methodName = methodName;
     }
 
-   /**
-    * Set the return value when the mocked method is executed.
-    * @param returnValue
-    */
-    public void thenReturn(Object returnValue) {
-      this.returnValue = returnValue;
+    public MockMethodSpec whenCalled() {
+      MockMethodSpec spec = new MockMethodSpec();
+      specs.add(spec);
+      return spec;
     }
 
-    public void thenThrow(Exception e) {
-      this.e = e;  
-    }
-
-    public Object getReturnValue() {
-      if (e != null) {
-        throw e;
+    public Object getMockedValue(List<Type> argTypes, List<Object> args) {
+      MockMethodSpec.Key specKey = new MockMethodSpec.Key(0); // 
+      for (MockMethodSpec spec : specs) {
+        if (spec.key.equals(specKey)) {
+          return spec.getReturnValue();
+        }
       }
-      return this.returnValue;
-    }
-
-    public void doNothing() {
+      throw new MockException('MockMethodSpec is not found');
     }
 }
