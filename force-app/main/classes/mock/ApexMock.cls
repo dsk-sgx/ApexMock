@@ -27,7 +27,8 @@ public class ApexMock {
      * @param methodName 
      */
     @TestVisible
-    private static MockMethod whenCalled(Object stubbedClass, String methodName) {
+    private static MockMethodSpec whenCalled(Object stubbedClass, String methodName) {
+        MockClass mockClass = mockClasses.get(stubbedClass);
         return mockClasses.get(stubbedClass).whenCalled(methodName);
     }
 

@@ -8,17 +8,17 @@ public class MockClass {
         this.type = type;
     }
 
-    public Object getMockedValue(String methodName, List<Type> paramTypes, List<Object> args) {
+    public Object getMockedValue(String methodName, List<Type> argTypes, List<Object> args) {
         MockMethod method = mockMethods.get(methodName);
         if (method == null) {
             throw new MockException('Return value is not set for ' + methodName);
         }
-        return method.getReturnValue();
+        return method.getReturnValue(argTypes, args);
     }
 
-    public MockMethod whenCalled(String methodName) {
+    public MockMethodSpec whenCalled(String methodName) {
         MockMethod method = new MockMethod(methodName);
         mockMethods.put(methodName, method);
-        return method;
+        return method.whenCalled();
     }
 }
