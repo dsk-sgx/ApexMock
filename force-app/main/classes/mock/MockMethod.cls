@@ -7,11 +7,8 @@ public class MockMethod {
 
     List<MockMethodSpec> specs = new List<MockMethodSpec>();
 
-    ExecutionState executionState;
-    
     public MockMethod(String methodName) {
       this.methodName = methodName;
-      this.executionState = new ExecutionState();
     }
 
     public MockMethodSpec whenCalled() {
@@ -21,17 +18,12 @@ public class MockMethod {
     }
 
     public Object getMockedValue(List<Type> argTypes, List<Object> args) {
-      MockMethodSpec.Key specKey = new MockMethodSpec.Key(executionState.getExecutionCount());
+      MockMethodSpec.Key specKey = new MockMethodSpec.Key(0); // 
       for (MockMethodSpec spec : specs) {
         if (spec.key.equals(specKey)) {
-          executionState.execute(args);
           return spec.getReturnValue();
         }
       }
-      throw new MockException('MockMethodSpec not found');
-    }
-
-    public ExecutionState getexecutionState() {
-      return executionState;
+      throw new MockException('MockMethodSpec is not found');
     }
 }
