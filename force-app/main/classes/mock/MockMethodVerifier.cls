@@ -3,15 +3,15 @@
  */
 public class MockMethodVerifier {
 
-    private final ExecutionStates executionStates;
+    private final MockMethodStates MockMethodStates;
 
     private Integer verifyArgsCount = 0;
 
     /**
-     * @param executionStates
+     * @param MockMethodStates
      */
-    public MockMethodVerifier(ExecutionStates executionStates) {
-        this.executionStates = executionStates;
+    public MockMethodVerifier(MockMethodStates MockMethodStates) {
+        this.MockMethodStates = MockMethodStates;
     }
 
     /**
@@ -19,7 +19,7 @@ public class MockMethodVerifier {
      * @param expect 
      */
     public MockMethodVerifier times(Integer expectCount) {
-        System.assertEquals(expectCount, executionStates.getExecutionCount());
+        System.assertEquals(expectCount, MockMethodStates.getExecutionCount());
         return this;
     }
 
@@ -41,7 +41,7 @@ public class MockMethodVerifier {
         return with(new List<Object>{arg1, arg2, arg3, arg4});
     }
     public MockMethodVerifier with(List<Object> expectArgs) {
-        List<Object> actual = executionStates.getExecutedArgs(++verifyArgsCount);
+        List<Object> actual = MockMethodStates.getExecutedArgs(++verifyArgsCount);
         System.assertEquals(expectArgs, actual);
         return this;
     }

@@ -7,13 +7,13 @@ public class MockMethod {
 
     private List<MockMethodSpec> specs = new List<MockMethodSpec>();
 
-    private ExecutionStates states = new ExecutionStates();
+    private MockMethodStates states = new MockMethodStates();
 
     public MockMethod(String methodName) {
       this.methodName = methodName;
     }
 
-    public ExecutionStates getExecutionStates() {
+    public MockMethodStates getExecutionStates() {
       return states;
     }
 
