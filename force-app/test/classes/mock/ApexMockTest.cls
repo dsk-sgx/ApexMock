@@ -31,6 +31,32 @@ private class ApexMockTest {
         System.assertEquals('Mocked Value2', mocked2.getString());
     }
 
+    @isTest
+    static void returnMockedValueWithExecutionCount() {
+        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
+        ApexMock.whenCalled(mocked, 'getString').times(1).thenReturn('Mocked Value1');
+        ApexMock.whenCalled(mocked, 'getString').times(2).thenReturn('Mocked Value2');
+
+        System.assertEquals('Mocked Value1', mocked.getString());
+        System.assertEquals('Mocked Value2', mocked.getString());
+    }
+
+    @isTest
+    static void callCountExceedsConditionCount() {
+        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
+        ApexMock.whenCalled(mocked, 'getString').times(1).thenReturn('Mocked Value1');
+        ApexMock.whenCalled(mocked, 'getString').times(2).thenReturn('Mocked Value2');
+
+        System.assertEquals('Mocked Value1', mocked.getString());
+        System.assertEquals('Mocked Value2', mocked.getString());
+        try {
+             mocked.getString();
+             System.assert(false);
+        } catch (MockException e) {
+            System.assert(e.getMessage().startsWith('Execution condition is not set'));
+        }
+    }
+
     @isTest   
     static void doNothingTest() {
         SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
