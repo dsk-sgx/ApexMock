@@ -25,13 +25,13 @@ public class MockMethodVerifier {
 
     /**
      * Verify the arguments when the mock method is executed.
-     * @param arg expect arg
+     * @param arg expect argument
      * @throw System.assertException When args doesn't match.
      */
-    public MockMethodVerifier with(Object expectArg) {
-        return with(new List<Object>{expectArg});
+    public MockMethodVerifier with(Object arg) {
+        return with(new List<Object>{arg});
     }
-    public MockMethodVerifier with(Object expectArg1, Object arg2) {
+    public MockMethodVerifier with(Object arg1, Object arg2) {
         return with(new List<Object>{arg1, arg2});
     }
     public MockMethodVerifier with(Object arg1, Object arg2, Object arg3) {
