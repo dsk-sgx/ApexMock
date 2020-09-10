@@ -3,33 +3,35 @@
  */
 public with sharing class MockMethodSpec {
 
-    public class Key {
+    /**
+     * The condition of the return value of the mock method.
+     */
+    public class Condition {
       private Integer times;
 
-      public Key() {
+      public Condition() {
       }
 
-      public Key(Integer times) {
+      public Condition(Integer times) {
         this.times = times;
       }
 
-      public Boolean equals(Object compare) {
-        if (compare == null) {
-          return false;
-        }
-        if (! (compare instanceOf Key)) {
+      public Boolean equals(Object obj) {
+        if (obj == null || !(obj instanceOf Condition)) {
           return false;
         }
 
-        if (this.times == null || ((Key)compare).times == null) {
+        Condition compare = (Condition)obj;
+        // If times is null, the condition is considered unspecified.
+        if (this.times == null || compare.times == null) {
           return true;
         }
 
-        return this.times == ((Key)compare).times;
+        return this.times == compare.times;
       }
     }
 
-    public final Key key = new Key();
+    public final Condition condition = new Condition();
 
     private Object returnValue;
 
@@ -38,7 +40,7 @@ public with sharing class MockMethodSpec {
     private Exception throwException;
 
     public MockMethodSpec times(Integer times) {
-      this.key.times = times;
+      this.condition.times = times;
       return this;
     }
 
