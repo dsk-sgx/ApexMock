@@ -2,7 +2,10 @@
 Mock library for Apex unit test.
 
 ## Deployment
-`sfdx force:source:push -u [alias for scratch org]`
+<a href="https://githubsfdeploy.herokuapp.com">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
 
 ## How to use
 see the [test class](force-app/test/classes/mock/ApexMockTest.cls).
