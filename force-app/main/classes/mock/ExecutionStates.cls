@@ -35,4 +35,16 @@ public with sharing class ExecutionStates {
     public Integer getExecutionCount(List<Type> argTypes) {
         return 0; // TODO 
     }
+
+    /**
+     * Return arguments subject to execution count.
+     * @param executionCount
+     * @return arguments
+     */
+    public List<Object> getExecutedArgs(Integer executionCount) {
+        if (!states.containsKey(executionCount)) {
+            throw new MockException('Invalid executionCount:' + executionCount);
+        }
+        return states.get(executionCount);
+    }
 }

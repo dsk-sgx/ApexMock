@@ -7,7 +7,7 @@ private class ApexMockTest {
         ApexMock.whenCalled(mocked, 'getString').thenReturn('Mocked Value');
 
         System.assertEquals('Mocked Value', mocked.getString());
-        // ApexMock.verify(mocked, 'getString').times(1); 
+        ApexMock.verify(mocked, 'getString').times(1);
     }
 
     @isTest
@@ -16,7 +16,7 @@ private class ApexMockTest {
         ApexMock.whenCalled(mocked, 'getString').thenReturn('Mocked Value');
 
         System.assertEquals('Mocked Value', mocked.getString('1', 2));
-        // ApexMock.verify(mocked, 'getString').times(1).with('1', 2);
+        ApexMock.verify(mocked, 'getString').times(1).with('1', 2);
     }
 
     @isTest
@@ -37,8 +37,10 @@ private class ApexMockTest {
         ApexMock.whenCalled(mocked, 'getString').times(1).thenReturn('Mocked Value1');
         ApexMock.whenCalled(mocked, 'getString').times(2).thenReturn('Mocked Value2');
 
-        System.assertEquals('Mocked Value1', mocked.getString());
-        System.assertEquals('Mocked Value2', mocked.getString());
+        System.assertEquals('Mocked Value1', mocked.getString('1', 1));
+        System.assertEquals('Mocked Value2', mocked.getString('2', 2));
+        ApexMock.verify(mocked, 'getString').times(2).with('1', 2).with('2', 2);
+
     }
 
     @isTest

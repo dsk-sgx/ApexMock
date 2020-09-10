@@ -40,8 +40,8 @@ public class ApexMock {
      */
     @TestVisible
     private static MockMethodVerifier verify(Object stubbedClass, String stubbedMethod) {
-        // TODO
-        return null;
+        ExecutionStates states = mockMethods.get(stubbedClass).getMethod(stubbedMethod).getExecutionStates();
+        return new MockMethodVerifier(states);
     } 
 
     private static StubProviderImpl stubProviderImpl = new StubProviderImpl();

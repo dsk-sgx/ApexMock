@@ -5,12 +5,16 @@ public class MockMethod {
 
     private String methodName;
 
-    List<MockMethodSpec> specs = new List<MockMethodSpec>();
+    private List<MockMethodSpec> specs = new List<MockMethodSpec>();
 
-    ExecutionStates states = new ExecutionStates();
+    private ExecutionStates states = new ExecutionStates();
 
     public MockMethod(String methodName) {
       this.methodName = methodName;
+    }
+
+    public ExecutionStates getExecutionStates() {
+      return states;
     }
 
     public MockMethodSpec whenCalled() {
