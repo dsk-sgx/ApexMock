@@ -39,7 +39,7 @@ private class ApexMockTest {
 
         System.assertEquals('Mocked Value1', mocked.getString('1', 1));
         System.assertEquals('Mocked Value2', mocked.getString('2', 2));
-        ApexMock.verify(mocked, 'getString').times(2).with('1', 2).with('2', 2);
+        ApexMock.verify(mocked, 'getString').times(2).with('1', 1).with('2', 2);
 
     }
 
