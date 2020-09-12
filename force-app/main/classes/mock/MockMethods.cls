@@ -13,7 +13,9 @@ public class MockMethods {
     }
 
     /**
+     * Returns a mock method that matches the name.
      * @param methodName
+     * @return a instance of MockMethod
      */
     public MockMethod getMethod(String methodName) {
         MockMethod method = mockMethods.get(methodName);

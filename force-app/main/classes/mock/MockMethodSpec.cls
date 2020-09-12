@@ -39,6 +39,10 @@ public with sharing class MockMethodSpec {
 
     private Exception throwException;
 
+    /**
+     * Determine how many times the specification is executed.
+     * @param times
+     */
     public MockMethodSpec times(Integer times) {
       this.condition.times = times;
       return this;
