@@ -31,7 +31,7 @@ public with sharing class MockMethodSpec {
       }
     }
 
-    public final Condition condition = new Condition();
+    private final Condition condition = new Condition();
 
     private Object returnValue;
 
@@ -81,5 +81,13 @@ public with sharing class MockMethodSpec {
      */
     public void doNothing() {
       isSetReturnValue = true;
+    }
+
+    /**
+     * Return the clone of condition.
+     * @return conditon.
+     */
+    public Condition getCondition() {
+      return new Condition(condition.times);
     }
 }

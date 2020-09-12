@@ -5,7 +5,7 @@ public class MockMethod {
 
     private String methodName;
 
-    private List<MockMethodSpec> specs = new List<MockMethodSpec>();
+    private MockMethodSpecs specs = new MockMethodSpecs();
 
     private MockMethodStates states = new MockMethodStates();
 
@@ -25,13 +25,11 @@ public class MockMethod {
 
     public Object getMockedValue(List<Type> argTypes, List<Object> args) {
       states.store(args);
-
       MockMethodSpec.Condition condition = new MockMethodSpec.Condition(states.getExecutionCount());
-      for (MockMethodSpec spec : specs) {
-        if (spec.condition.equals(condition)) {
-          return spec.getReturnValue();
-        }
+      MockMethodSpec spec = specs.get(condition);
+      if (spec == null) {
+        throw new MockException('Execution condition is not set. Name:' + methodName + ' ' + condition);
       }
-      throw new MockException('Execution condition is not set. Name:' + methodName + ' ' + condition);
+      return spec.getReturnValue();
     }
 }
