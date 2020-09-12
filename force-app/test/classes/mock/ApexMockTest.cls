@@ -2,21 +2,26 @@
 private class ApexMockTest {
 
     @isTest
-    static void returnMockedStringValue() {
+    static void returnMockedValue() {
         SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
-        ApexMock.whenCalled(mocked, 'getString').thenReturn('Mocked Value');
+        ApexMock.whenCalled(mocked, 'getString').times(1).thenReturn('Mocked Value');
 
-        System.assertEquals('Mocked Value', mocked.getString());
-        ApexMock.verify(mocked, 'getString').times(1);
+        System.assertEquals('Mocked Value', mocked.getString('first', 1));
+        ApexMock.verify(mocked, 'getString').times(1).calledWith('first', 1);
     }
 
     @isTest
-    static void returnMockedStringValueWithArgs() {
+    static void returnMockedValueMultipleExecutions() {
         SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
-        ApexMock.whenCalled(mocked, 'getString').thenReturn('Mocked Value');
+        ApexMock.whenCalled(mocked, 'getString').times(1).thenReturn('Mocked Value1');
+        ApexMock.whenCalled(mocked, 'getString').times(2).thenReturn('Mocked Value2');
 
-        System.assertEquals('Mocked Value', mocked.getString('1', 2));
-        ApexMock.verify(mocked, 'getString').times(1).calledWith('1', 2);
+        System.assertEquals('Mocked Value1', mocked.getString('first', 1));
+        System.assertEquals('Mocked Value2', mocked.getString('second', 2));
+        ApexMock.verify(mocked, 'getString')
+                .times(2)
+                .nthCalledWith(1, 'first', 1)
+                .nthCalledWith(2, 'second', 2);
     }
 
     @isTest
@@ -27,43 +32,16 @@ private class ApexMockTest {
         SomeClass mocked2 = (SomeClass)ApexMock.create(SomeClass.class);
         ApexMock.whenCalled(mocked2, 'getString').thenReturn('Mocked Value2');
 
-        System.assertEquals('Mocked Value1', mocked1.getString());
-        System.assertEquals('Mocked Value2', mocked2.getString());
-    }
-
-    @isTest
-    static void returnMockedValueWithExecutionCount() {
-        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
-        ApexMock.whenCalled(mocked, 'getString').times(1).thenReturn('Mocked Value1');
-        ApexMock.whenCalled(mocked, 'getString').times(2).thenReturn('Mocked Value2');
-
-        System.assertEquals('Mocked Value1', mocked.getString('1', 1));
-        System.assertEquals('Mocked Value2', mocked.getString('2', 2));
-        ApexMock.verify(mocked, 'getString').times(2).calledWith('1', 1).calledWith('2', 2);
-
-    }
-
-    @isTest
-    static void callCountExceedsConditionCount() {
-        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
-        ApexMock.whenCalled(mocked, 'getString').times(1).thenReturn('Mocked Value1');
-        ApexMock.whenCalled(mocked, 'getString').times(2).thenReturn('Mocked Value2');
-
-        System.assertEquals('Mocked Value1', mocked.getString());
-        System.assertEquals('Mocked Value2', mocked.getString());
-        try {
-             mocked.getString();
-             System.assert(false);
-        } catch (MockException e) {
-            System.assert(e.getMessage().startsWith('Execution condition is not set'));
-        }
+        System.assertEquals('Mocked Value1', mocked1.getString('first', 1));
+        System.assertEquals('Mocked Value2', mocked2.getString('second', 2));
+        ApexMock.verify(mocked1, 'getString').times(1).calledWith('first', 1);
+        ApexMock.verify(mocked2, 'getString').times(1).calledWith('second', 2);
     }
 
     @isTest   
     static void doNothingTest() {
         SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
         ApexMock.whenCalled(mocked, 'voidMethod').doNothing();
-
         mocked.voidMethod();
     }
 
@@ -77,19 +55,6 @@ private class ApexMockTest {
             System.assert(false, 'No exception was thrown.');
         } catch (SomeException e) {
             System.assertEquals('Mocked exception', e.getMessage());
-        }
-    }
-
-    @isTest
-    static void throwExceptionWhenNotSetReturnValue() {
-        SomeClass mocked = (SomeClass)ApexMock.create(SomeClass.class);
-        ApexMock.whenCalled(mocked, 'getString');
-
-        try {
-            mocked.getString();
-            System.assert(false, 'No exception was thrown.');
-        } catch (MockException e) {
-            System.assertEquals('Return value is not set.', e.getMessage());
         }
     }
 }

@@ -42,7 +42,8 @@ public class MockMethodVerifier {
     }
     public MockMethodVerifier calledWith(List<Object> expectArgs) {
         List<List<Object>> actual = mockMethodStates.getAllExecutedArgs();
-        System.assert(actual.contains(expectArgs));
+        System.assert(actual.contains(expectArgs), 
+                'Argsments does not match expected:' + expectArgs + ' actual:' + actual);
         return this;
     }
 
