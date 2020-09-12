@@ -9,6 +9,7 @@ public with sharing class MockMethodStates {
 
     private Integer executionCount = 0;
 
+    @TestVisible
     private Map<Integer, List<Object>> states = new Map<Integer, List<Object>>();
 
     /**
@@ -32,9 +33,10 @@ public with sharing class MockMethodStates {
      * Get the total number of method executions for each argument type.
      * @return execution count
      */
-    public Integer getExecutionCount(List<Type> argTypes) {
-        return 0; // TODO 
-    }
+    // TODO Implement it when it becomes necessary.
+    // public Integer getExecutionCount(List<Type> argTypes) {
+    //     return 0;
+    // }
 
     /**
      * Return arguments subject to execution count.
