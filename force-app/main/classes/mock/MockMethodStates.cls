@@ -47,4 +47,12 @@ public with sharing class MockMethodStates {
         }
         return states.get(executionCount);
     }
+
+    /**
+     * Return the all argments executed.
+     * @return arguments
+     */
+    public List<List<Object>> getAllExecutedArgs() {
+        return states.values();
+    }
 }

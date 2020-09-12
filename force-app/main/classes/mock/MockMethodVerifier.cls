@@ -25,6 +25,8 @@ public class MockMethodVerifier {
 
     /**
      * Verify the arguments when the mock method is executed.
+     * If the method is executed multiple times, this method verifies that it matches one of them.
+     * 
      * @param arg expect argument
      * @throw System.assertException When args doesn't match.
      */
@@ -41,8 +43,10 @@ public class MockMethodVerifier {
         return calledWith(new List<Object>{arg1, arg2, arg3, arg4});
     }
     public MockMethodVerifier calledWith(List<Object> expectArgs) {
-        List<Object> actual = MockMethodStates.getExecutedArgs(++verifyArgsCount);
-        System.assertEquals(expectArgs, actual);
+        List<List<Object>> actual = MockMethodStates.getAllExecutedArgs();
+        System.assert(actual.contains(expectArgs));
         return this;
     }
+
+
 }
