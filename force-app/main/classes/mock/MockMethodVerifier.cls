@@ -28,19 +28,19 @@ public class MockMethodVerifier {
      * @param arg expect argument
      * @throw System.assertException When args doesn't match.
      */
-    public MockMethodVerifier with(Object arg) {
-        return with(new List<Object>{arg});
+    public MockMethodVerifier calledWith(Object arg) {
+        return calledWith(new List<Object>{arg});
     }
-    public MockMethodVerifier with(Object arg1, Object arg2) {
-        return with(new List<Object>{arg1, arg2});
+    public MockMethodVerifier calledWith(Object arg1, Object arg2) {
+        return calledWith(new List<Object>{arg1, arg2});
     }
-    public MockMethodVerifier with(Object arg1, Object arg2, Object arg3) {
-        return with(new List<Object>{arg1, arg2, arg3});
+    public MockMethodVerifier calledWith(Object arg1, Object arg2, Object arg3) {
+        return calledWith(new List<Object>{arg1, arg2, arg3});
     }
-    public MockMethodVerifier with(Object arg1, Object arg2, Object arg3, Object arg4) {
-        return with(new List<Object>{arg1, arg2, arg3, arg4});
+    public MockMethodVerifier calledWith(Object arg1, Object arg2, Object arg3, Object arg4) {
+        return calledWith(new List<Object>{arg1, arg2, arg3, arg4});
     }
-    public MockMethodVerifier with(List<Object> expectArgs) {
+    public MockMethodVerifier calledWith(List<Object> expectArgs) {
         List<Object> actual = MockMethodStates.getExecutedArgs(++verifyArgsCount);
         System.assertEquals(expectArgs, actual);
         return this;
