@@ -7,6 +7,7 @@ public with sharing class MockMethodStates {
 
     private String methodName; // Does not supported overload.
 
+    @TestVisible
     private Integer executionCount = 0;
 
     @TestVisible

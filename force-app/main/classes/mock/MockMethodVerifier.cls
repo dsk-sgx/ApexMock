@@ -14,10 +14,14 @@ public class MockMethodVerifier {
 
     /**
      * Verify the total execution count of mocked method.
-     * @param expect 
+     * @param expectedCount 
+     * @throws MockException when executed count does not match.
      */
-    public MockMethodVerifier times(Integer expectCount) {
-        System.assertEquals(expectCount, mockMethodStates.getExecutionCount());
+    public MockMethodVerifier times(Integer expectedCount) {
+        Integer actualCount = mockMethodStates.getExecutionCount();
+        if (expectedCount != actualCount) {
+            throw new MockException('Called count does not matched. expected was '  + expectedCount + ' but was ' + actualCount);
+        }
         return this;
     }
 
