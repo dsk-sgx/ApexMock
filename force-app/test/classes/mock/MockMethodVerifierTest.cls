@@ -69,4 +69,21 @@ public  class MockMethodVerifierTest {
             System.assert(e.getMessage().startsWith('Called count does not matched'));
         }
     }
+
+    @isTest
+    static void calledWithMatchedPrimitiveArgument() {
+        MockMethodStates states = new MockMethodStates();
+        states.states.put(1, new List<Object>{'String Argmuent'});
+        states.states.put(2, new List<Object>{200});
+        states.states.put(3, new List<Object>{Date.newInstance(1985, 1, 16)});
+
+        MockMethodVerifier verifier = new MockMethodVerifier(states);
+        verifier.calledWith('String Argmuent');
+        verifier.calledWith(200);
+        verifier.calledWith(Date.newInstance(1985, 1, 16));
+    }
+
+    @isTest
+    static void calledWithMatchedArgument() {
+    }
 }

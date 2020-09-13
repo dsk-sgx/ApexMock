@@ -1,5 +1,13 @@
 public class SomeClass {
     
+    public String stringField;
+
+    public Date dateField;
+
+    public List<Object> listField;
+
+    public Map<String, Object> mapField;
+
     public void voidMethod() {
         throw new SomeException('Called original method.');
     }

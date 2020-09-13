@@ -20,6 +20,7 @@ public class MockMethodVerifier {
     public MockMethodVerifier times(Integer expectedCount) {
         Integer actualCount = mockMethodStates.getExecutionCount();
         if (expectedCount != actualCount) {
+            // System.assertEquals() is not used because System.assertException cannot catch in the unit test.
             throw new MockException('Called count does not matched. expected was '  + expectedCount + ' but was ' + actualCount);
         }
         return this;
